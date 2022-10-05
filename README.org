@@ -1,0 +1,36 @@
+#+title: whyfetch
+
+whyfetch gets stock prices from Yahoo Finance and updates entries in a [[https://www.ledger-cli.org/][ledger]] commodity price database.
+
+Price databases are simply text files with entries with the following syntax:
+
+#+begin_src conf
+
+  P YYYY/MM/DD HH:MM:SS "COMMODITY" PRICE CURRENCY
+
+#+end_src
+
+whyfetch automatically identifies the commodity and adds a new, updated entry under the latest entry for each commodity.
+
+* Installation
+
+Install whyfetch manually. It might not be useful enough to be in MELPA.
+
+* Usage
+
+In the ledger database file, run =M-x whyfetch-update-ledger-db-prices= and let whyfetch do its magic.
+
+If there is a Bitcoin entry (commodity code BTC), whyfetch will not only get the latest price in USD, but also convert it to any other currency given at the end of the entry. For example, if whyfetch finds the line
+
+#+begin_src conf
+
+  P 2022/10/04 18:39:45 "BTC" 105205.49 BRL
+
+#+end_src
+
+it will know to convert BTC into BRL. Other coins are not
+supported for the time being.
+
+* Bugs
+
+whyfetch seems to randomly fail after the first commodity is processed. I have tried debugging it to no avail so far.
